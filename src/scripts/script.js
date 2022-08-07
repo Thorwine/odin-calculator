@@ -8,31 +8,48 @@ class Calc {
       return this.operandX + this.operandY;
     };
 
-    this.testSubtract = function () {
+    this.subtract = function () {
       return this.operandX - this.operandY;
     };
 
-    this.testMultiply = function () {
+    this.multiply = function () {
       return this.operandX * this.operandY;
     };
 
-    this.testDivide = function () {
+    this.divide = function () {
       return this.operandX / this.operandY;
     };
   };
 };
+// --------------------------------------------
+function operate(operandX, operandY, operator) {
 
+  const operation = new Calc(operandX, operandY);
 
-// Tests
+  switch (operator) {
+    case '+':
+      return operation.add();
+    case '-':
+      return operation.subtract();
+    case '*':
+      return operation.multiply();
+    case '/':
+      return operation.divide();
+  }
+}
+// --------------------------------------------
+// Console Tests
 
 const testSum = new Calc(3, 4);
-console.log(testSum.add());
-
+console.log('Add: ' + testSum.add());
 const testSub = new Calc(9, 4);
-console.log(testSub.testSubtract());
-
+console.log('Subtract: ' + testSub.subtract());
 const testMul = new Calc(5, 5);
-console.log(testMul.testMultiply());
+console.log('Multiply: ' + testMul.multiply());
+const testDiv = new Calc(100, 10);
+console.log('Divide: ' + testDiv.divide());
 
-const testDiv = new Calc(25, 5);
-console.log(testDiv.testDivide());
+console.log(operate(3, 4, '+'));
+console.log(operate(9, 4, '-'));
+console.log(operate(5, 5, '*'));
+console.log(operate(100, 10, '/'));
