@@ -8,9 +8,56 @@
 
 html {
   font-family: 'Roboto', sans-serif;
+  text-align: center;
   display: block;
 }
 
 body {
+  display: block;
+}
+
+.main {
+  height: 100vh;
   background-color: sienna;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  background-color: lightgrey;
+  border: 3px solid black;
+  border-radius: 4px;
+  width: 217px;
+  height: 298px;
+  display: flex;
+  flex-direction: column;
+}
+
+.display {
+  background-color: grey;
+  border-bottom: 3px solid black;
+  height: 30px;
+  width: 100%;
+  padding-right: 8px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.buttons {
+  margin: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.button {
+  background-color: antiquewhite;
+  height: 50px;
+  width: 50px;
+}
+
+#zero {
+  width: 102px;
 }

@@ -1,3 +1,9 @@
+// EVENT LISTENERS
+
+const btnOne = document.querySelector('#one');
+btnOne.addEventListener('click', () => { console.log('one') });
+
+// --------------------------------------------
 class Calc {
   constructor(operandX, operandY) {
 
@@ -38,18 +44,21 @@ function operate(operandX, operandY, operator) {
   }
 }
 // --------------------------------------------
-// Console Tests
 
-const testSum = new Calc(3, 4);
-console.log('Add: ' + testSum.add());
-const testSub = new Calc(9, 4);
-console.log('Subtract: ' + testSub.subtract());
-const testMul = new Calc(5, 5);
-console.log('Multiply: ' + testMul.multiply());
-const testDiv = new Calc(100, 10);
-console.log('Divide: ' + testDiv.divide());
+// --------------------------------------------
 
-console.log(operate(3, 4, '+'));
-console.log(operate(9, 4, '-'));
-console.log(operate(5, 5, '*'));
-console.log(operate(100, 10, '/'));
+// Console Logs
+
+// const testSum = new Calc(3, 4);
+// console.log('Add: ' + testSum.add());
+// const testSub = new Calc(9, 4);
+// console.log('Subtract: ' + testSub.subtract());
+// const testMul = new Calc(5, 5);
+// console.log('Multiply: ' + testMul.multiply());
+// const testDiv = new Calc(100, 10);
+// console.log('Divide: ' + testDiv.divide());
+
+// console.log(operate(3, 4, '+'));
+// console.log(operate(9, 4, '-'));
+// console.log(operate(5, 5, '*'));
+// console.log(operate(100, 10, '/'));
