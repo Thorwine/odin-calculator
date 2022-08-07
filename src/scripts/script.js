@@ -8,33 +8,33 @@ let operatorChosen = false;
 
 // numeric buttons
 const btnOne = document.querySelector('#one');
-btnOne.addEventListener('click', () => { writeDisplay('1') });
+btnOne.addEventListener('click', () => { setInput('1') });
 const btnTwo = document.querySelector('#two');
-btnTwo.addEventListener('click', () => { writeDisplay('2') });
+btnTwo.addEventListener('click', () => { setInput('2') });
 const btnThree = document.querySelector('#three');
-btnThree.addEventListener('click', () => { writeDisplay('3') });
+btnThree.addEventListener('click', () => { setInput('3') });
 const btnFour = document.querySelector('#four');
-btnFour.addEventListener('click', () => { writeDisplay('4') });
+btnFour.addEventListener('click', () => { setInput('4') });
 const btnFive = document.querySelector('#five');
-btnFive.addEventListener('click', () => { writeDisplay('5') });
+btnFive.addEventListener('click', () => { setInput('5') });
 const btnSix = document.querySelector('#six');
-btnSix.addEventListener('click', () => { writeDisplay('6') });
+btnSix.addEventListener('click', () => { setInput('6') });
 const btnSeven = document.querySelector('#seven');
-btnSeven.addEventListener('click', () => { writeDisplay('7') });
+btnSeven.addEventListener('click', () => { setInput('7') });
 const btnEight = document.querySelector('#eight');
-btnEight.addEventListener('click', () => { writeDisplay('8') });
+btnEight.addEventListener('click', () => { setInput('8') });
 const btnNine = document.querySelector('#nine');
-btnNine.addEventListener('click', () => { writeDisplay('9') });
+btnNine.addEventListener('click', () => { setInput('9') });
 
 // operand buttons
 const btnAdd = document.querySelector('#add');
-btnAdd.addEventListener('click', () => { writeDisplay('+') });
+btnAdd.addEventListener('click', () => { setInput('+') });
 const btnSubtract = document.querySelector('#subtract');
-btnSubtract.addEventListener('click', () => { writeDisplay('-') });
+btnSubtract.addEventListener('click', () => { setInput('-') });
 const btnMultiply = document.querySelector('#multiply');
-btnMultiply.addEventListener('click', () => { writeDisplay('*') });
+btnMultiply.addEventListener('click', () => { setInput('*') });
 const btnDivide = document.querySelector('#divide');
-btnDivide.addEventListener('click', () => { writeDisplay('/') });
+btnDivide.addEventListener('click', () => { setInput('/') });
 
 // special buttons
 const btnAC = document.querySelector('#allclear');
@@ -81,7 +81,7 @@ function operate(operandX, operandY, operator) {
   }
 }
 // --------------------------------------------
-function writeDisplay(input) {
+function setInput(input) {
 
   inputArray.push(input); // add input to array
 
@@ -93,15 +93,18 @@ function writeDisplay(input) {
 
   if (operatorChosen === false) {
     if (inputString.search(regEx) < 0) { // search(regEx) returned -1 > no operator was chosen > write to display
-      inputDisplay.textContent = inputArray.join('');
+      writeDisplay(inputArray.join(''));
     } else {
       operatorChosen = true;
     }
   } else {
-    inputDisplay.textContent = inputArray.join('').slice((inputString.search(regEx) + 1), inputArray.length); // write to display after operator
+    writeDisplay(inputArray.join('').slice((inputString.search(regEx) + 1), inputArray.length)); // write to display after operator
   }
 }
-
+// --------------------------------------------
+function writeDisplay(value) {
+  inputDisplay.textContent = value;
+}
 // --------------------------------------------
 function clearAll() {
   inputDisplay.textContent = '0'; //clear display
