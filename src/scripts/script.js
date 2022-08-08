@@ -87,10 +87,10 @@ function setInput(input) {
   console.log(inputArray);
   console.log('getOperatorPos(): ' + getOperatorPos());
 
-  if (getOperatorPos() < 0) {
+  if (getOperatorPos() < 0) { // no operator in array (-1)
     writeDisplay(inputArray.join('')); // write numbers without separators
-  } else if ((getOperatorPos() + 1) === inputArray.length) {
-    writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write numbers before operator
+  } else if ((getOperatorPos() + 1) === inputArray.length) { // last element in array is an operator
+    writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write numbers before operator to preserve display
   } else {
     writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
   }
