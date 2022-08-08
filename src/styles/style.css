@@ -58,6 +58,14 @@ body {
   width: 50px;
 }
 
+.btnOperator {
+  background-color: aqua;
+}
+
+.btnOperatorActive {
+  background-color: blue;
+}
+
 #zero {
   width: 102px;
 }

@@ -24,6 +24,8 @@ const btnEight = document.querySelector('#eight');
 btnEight.addEventListener('click', () => { setInput('8') });
 const btnNine = document.querySelector('#nine');
 btnNine.addEventListener('click', () => { setInput('9') });
+const btnZero = document.querySelector('#zero');
+btnZero.addEventListener('click', () => { setInput('0') });
 
 // operand buttons
 const btnAdd = document.querySelector('#add');
@@ -87,31 +89,42 @@ function processSolution() {
   let operandY = 0;
   let operator = '';
 
-
   operandX = parseInt(inputArray.join('').slice(0, getOperatorPos()));
   operandY = parseInt(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length));
   operator = inputArray.join('').slice(getOperatorPos(), getOperatorPos() + 1);
 
-  console.log('processSolution() >>> operandX: ' + operandX + ' | operator: ' + operator + ' | operandY: ' + operandY);
-  console.log(inputArray);
+  // console.log('processSolution() >>> operandX: ' + operandX + ' | operator: ' + operator + ' | operandY: ' + operandY);
 
   writeDisplay(operate(operandX, operandY, operator));
 
+  inputArray.length = 0; // delete inputArray
+  let tempArray = inputDisplay.textContent.split(''); // create tempArray from display
+  tempArray.map((item) => inputArray.push(item)); // copy tempArray back to inputArray for next operation
+
+  console.log(inputArray);
+  setBtnOperatorInactive();
 }
 // --------------------------------------------
 function setInput(input) {
 
-  inputArray.push(input); // add input to array
+  // TODO Check for second operator click
+  setBtnOperatorActive(input);
 
-  // console.log(inputArray);
+  inputArray.push(input); // add input to array
+  console.log(inputArray);
   // console.log('getOperatorPos(): ' + getOperatorPos());
+  // console.log('inputArray.length: ' + inputArray.length);
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
+    console.log('no operator');
     writeDisplay(inputArray.join('')); // write numbers without separators
   } else if ((getOperatorPos() + 1) === inputArray.length) { // last element in array is an operator
+    console.log('last element is operator');
     writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write numbers before operator to preserve display
   } else {
+    console.log('write after operator');
     writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
+    setBtnOperatorInactive();
   }
 }
 // --------------------------------------------
@@ -119,7 +132,34 @@ function getOperatorPos() {
   const regEx = /[+\-*\/]/g; // regular expression for the operators (+-*/)
   const inputString = (inputArray.join('').toString()); // convert inputArray to inputString
 
+  // console.log(inputString.search(regEx));
   return inputString.search(regEx); // returns position of operator (-1 if no operator is set)
+}
+// --------------------------------------------
+function setBtnOperatorActive(input) {
+  switch (input) {
+    case '+':
+      btnAdd.classList.add('btnOperatorActive');
+      break;
+    case '-':
+      btnSubtract.classList.add('btnOperatorActive');
+      break;
+    case '*':
+      btnMultiply.classList.add('btnOperatorActive');
+      break;
+    case '/':
+      btnDivide.classList.add('btnOperatorActive');
+      break;
+    default:
+      break;
+  }
+}
+// --------------------------------------------
+function setBtnOperatorInactive() {
+  btnAdd.classList.remove('btnOperatorActive');
+  btnSubtract.classList.remove('btnOperatorActive');
+  btnMultiply.classList.remove('btnOperatorActive');
+  btnDivide.classList.remove('btnOperatorActive');
 }
 // --------------------------------------------
 function writeDisplay(value) {
@@ -129,6 +169,8 @@ function writeDisplay(value) {
 function clearAll() {
   inputDisplay.textContent = '0'; //clear display
   inputArray.length = 0; // clear array
+
+  setBtnOperatorInactive()
 
   console.clear();
   console.log(inputArray);
@@ -150,3 +192,5 @@ function clearAll() {
 // console.log(operate(9, 4, '-'));
 // console.log(operate(5, 5, '*'));
 // console.log(operate(100, 10, '/'));
+
+// 12 + 7 - 5 * 3 = 42
