@@ -36,6 +36,8 @@ const btnDivide = document.querySelector('#divide');
 btnDivide.addEventListener('click', () => { setInput('/') });
 
 // special buttons
+const btnEquals = document.querySelector('#equals');
+btnEquals.addEventListener('click', () => processSolution());
 const btnAC = document.querySelector('#allclear');
 btnAC.addEventListener('click', () => clearAll());
 
@@ -80,12 +82,29 @@ function operate(operandX, operandY, operator) {
   }
 }
 // --------------------------------------------
+function processSolution() {
+  let operandX = 0;
+  let operandY = 0;
+  let operator = '';
+
+
+  operandX = parseInt(inputArray.join('').slice(0, getOperatorPos()));
+  operandY = parseInt(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length));
+  operator = inputArray.join('').slice(getOperatorPos(), getOperatorPos() + 1);
+
+  console.log('processSolution() >>> operandX: ' + operandX + ' | operator: ' + operator + ' | operandY: ' + operandY);
+  console.log(inputArray);
+
+  writeDisplay(operate(operandX, operandY, operator));
+
+}
+// --------------------------------------------
 function setInput(input) {
 
   inputArray.push(input); // add input to array
 
-  console.log(inputArray);
-  console.log('getOperatorPos(): ' + getOperatorPos());
+  // console.log(inputArray);
+  // console.log('getOperatorPos(): ' + getOperatorPos());
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
     writeDisplay(inputArray.join('')); // write numbers without separators
