@@ -112,7 +112,15 @@ function setInput(input) {
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
 
-  inputArray.push(input); // add input to array
+  // limit input for each operand
+  if (inputArray.length < 9) { // allow max 9 digits
+    inputArray.push(input);
+  } else if (checkInput(input) >= 0) { // always allow operator
+    inputArray.push(input);
+  } else if (inputArray.length > 9 && inputArray.length < 19) { // allow max 9 digits after operator
+    inputArray.push(input); // 
+  }
+
   console.log(inputArray);
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
