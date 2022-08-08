@@ -129,7 +129,17 @@ function setInput(input) {
     writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write only the numbers without operator
   } else { // everything after the operator
     if (operatorActive === true && checkInput(input) >= 0) { // second operator incoming!
-      processSolution(input); // process intermediate solution and pass over second operator
+
+      // check if last digit is an operator. If so, change against the new chosen operator
+      if (checkInput(inputArray.slice(inputArray.length - 1, inputArray.length).toString()) >= 0) { // last digit is an operator
+        inputArray.splice(inputArray.length - 2, 2); // delete last 2 digits
+        inputArray.push(input); // add new operator
+        setOperatorInactive();
+        setOperatorActive(input);
+      } else {
+        processSolution(input); // process intermediate solution and pass over second operator
+      }
+
     } else { // NO second operator, proceed...
       writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
       setOperatorInactive();
