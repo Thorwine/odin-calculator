@@ -2,7 +2,6 @@
 
 const inputArray = [];
 const inputDisplay = document.querySelector('.display');
-let operatorChosen = false;
 
 // SELECTORS & EVENT LISTENERS
 
@@ -85,21 +84,23 @@ function setInput(input) {
 
   inputArray.push(input); // add input to array
 
-  const regEx = /[+\-*\/]/g; // operators (+-*/)
-  const inputString = (inputArray.join('').toString()); // array to string
-
-  console.log(inputString + ' ' + inputString.search(regEx));
   console.log(inputArray);
+  console.log('getOperatorPos(): ' + getOperatorPos());
 
-  if (operatorChosen === false) {
-    if (inputString.search(regEx) < 0) { // search(regEx) returned -1 > no operator was chosen > write to display
-      writeDisplay(inputArray.join(''));
-    } else {
-      operatorChosen = true;
-    }
+  if (getOperatorPos() < 0) {
+    writeDisplay(inputArray.join('')); // write numbers without separators
+  } else if ((getOperatorPos() + 1) === inputArray.length) {
+    writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write numbers before operator
   } else {
-    writeDisplay(inputArray.join('').slice((inputString.search(regEx) + 1), inputArray.length)); // write to display after operator
+    writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
   }
+}
+// --------------------------------------------
+function getOperatorPos() {
+  const regEx = /[+\-*\/]/g; // regular expression for the operators (+-*/)
+  const inputString = (inputArray.join('').toString()); // convert inputArray to inputString
+
+  return inputString.search(regEx); // returns position of operator (-1 if no operator is set)
 }
 // --------------------------------------------
 function writeDisplay(value) {
@@ -109,14 +110,13 @@ function writeDisplay(value) {
 function clearAll() {
   inputDisplay.textContent = '0'; //clear display
   inputArray.length = 0; // clear array
-  operatorChosen = false;
 
   console.clear();
   console.log(inputArray);
 }
 // --------------------------------------------
 
-// Console Logs
+// Console Tests
 
 // const testSum = new Calc(3, 4);
 // console.log('Add: ' + testSum.add());
