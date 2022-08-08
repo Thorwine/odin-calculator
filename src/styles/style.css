@@ -58,12 +58,20 @@ body {
   width: 50px;
 }
 
+.btnNumber {
+  background-color: orange;
+}
+
 .btnOperator {
   background-color: aqua;
 }
 
 .btnOperatorActive {
-  background-color: blue;
+  background-color: limegreen;
+}
+
+.btnSpecial {
+  background-color: lightseagreen;
 }
 
 #zero {
