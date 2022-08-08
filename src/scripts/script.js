@@ -93,8 +93,6 @@ function processSolution(appendOperator) {
   operandY = parseInt(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length));
   operator = inputArray.join('').slice(getOperatorPos(), getOperatorPos() + 1);
 
-  // console.log('processSolution() >>> operandX: ' + operandX + ' | operator: ' + operator + ' | operandY: ' + operandY);
-
   writeDisplay(operate(operandX, operandY, operator));
 
   inputArray.length = 0; // delete inputArray
@@ -105,7 +103,6 @@ function processSolution(appendOperator) {
   if (typeof appendOperator !== 'undefined') {
     inputArray.push(appendOperator);
   }
-
   console.log(inputArray);
   setOperatorInactive();
 }
@@ -114,24 +111,18 @@ function setInput(input) {
 
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
-  // console.log(checkInput(input));
 
   inputArray.push(input); // add input to array
   console.log(inputArray);
-  // console.log('getOperatorPos(): ' + getOperatorPos());
-  // console.log('inputArray.length: ' + inputArray.length);
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
-    // console.log('no operator');
-    writeDisplay(inputArray.join('')); // write numbers without separators
-  } else if ((getOperatorPos() + 1) === inputArray.length) { // last element in array is an operator
-    // console.log('last element is operator');
-    writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write numbers before operator to preserve display
-  } else {
-    if (operatorActive === true && checkInput(input) >= 0) { // second operator incoming
-      processSolution(input); // process solution and pass over second operator
-    } else {
-      // console.log('write after operator');
+    writeDisplay(inputArray.join('')); // write numbers 
+  } else if ((getOperatorPos() + 1) === inputArray.length) { // last element in array is now an operator
+    writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write only the numbers without operator
+  } else { // everything after the operator
+    if (operatorActive === true && checkInput(input) >= 0) { // second operator incoming!
+      processSolution(input); // process intermediate solution and pass over second operator
+    } else { // NO second operator, proceed...
       writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
       setOperatorInactive();
     }
