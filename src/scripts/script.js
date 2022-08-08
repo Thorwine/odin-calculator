@@ -84,7 +84,7 @@ function operate(operandX, operandY, operator) {
   }
 }
 // --------------------------------------------
-function processSolution() {
+function processSolution(appendOperator) {
   let operandX = 0;
   let operandY = 0;
   let operator = '';
@@ -101,6 +101,11 @@ function processSolution() {
   let tempArray = inputDisplay.textContent.split(''); // create tempArray from display
   tempArray.map((item) => inputArray.push(item)); // copy tempArray back to inputArray for next operation
 
+  // attach next operator if not undefined
+  if (typeof appendOperator !== 'undefined') {
+    inputArray.push(appendOperator);
+  }
+
   console.log(inputArray);
   setOperatorInactive();
 }
@@ -109,6 +114,7 @@ function setInput(input) {
 
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
+  // console.log(checkInput(input));
 
   inputArray.push(input); // add input to array
   console.log(inputArray);
@@ -116,16 +122,25 @@ function setInput(input) {
   // console.log('inputArray.length: ' + inputArray.length);
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
-    console.log('no operator');
+    // console.log('no operator');
     writeDisplay(inputArray.join('')); // write numbers without separators
   } else if ((getOperatorPos() + 1) === inputArray.length) { // last element in array is an operator
-    console.log('last element is operator');
+    // console.log('last element is operator');
     writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write numbers before operator to preserve display
   } else {
-    console.log('write after operator');
-    writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
-    setOperatorInactive();
+    if (operatorActive === true && checkInput(input) >= 0) { // second operator incoming
+      processSolution(input); // process solution and pass over second operator
+    } else {
+      // console.log('write after operator');
+      writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
+      setOperatorInactive();
+    }
   }
+}
+// --------------------------------------------
+function checkInput(input) {
+  const regEx = /[+\-*\/]/g; // regular expression for the operators (+-*/)
+  return input.search(regEx); // -1 if no operator is chosen
 }
 // --------------------------------------------
 function getOperatorPos() {
