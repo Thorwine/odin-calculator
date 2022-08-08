@@ -1,5 +1,5 @@
 // VARIABLES
-
+let operatorActive = false;
 const inputArray = [];
 const inputDisplay = document.querySelector('.display');
 
@@ -102,13 +102,13 @@ function processSolution() {
   tempArray.map((item) => inputArray.push(item)); // copy tempArray back to inputArray for next operation
 
   console.log(inputArray);
-  setBtnOperatorInactive();
+  setOperatorInactive();
 }
 // --------------------------------------------
 function setInput(input) {
 
-  // TODO Check for second operator click
-  setBtnOperatorActive(input);
+  // if input is an operator, set classList & boolean
+  setOperatorActive(input);
 
   inputArray.push(input); // add input to array
   console.log(inputArray);
@@ -124,7 +124,7 @@ function setInput(input) {
   } else {
     console.log('write after operator');
     writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
-    setBtnOperatorInactive();
+    setOperatorInactive();
   }
 }
 // --------------------------------------------
@@ -136,30 +136,35 @@ function getOperatorPos() {
   return inputString.search(regEx); // returns position of operator (-1 if no operator is set)
 }
 // --------------------------------------------
-function setBtnOperatorActive(input) {
+function setOperatorActive(input) {
   switch (input) {
     case '+':
       btnAdd.classList.add('btnOperatorActive');
+      operatorActive = true;
       break;
     case '-':
       btnSubtract.classList.add('btnOperatorActive');
+      operatorActive = true;
       break;
     case '*':
       btnMultiply.classList.add('btnOperatorActive');
+      operatorActive = true;
       break;
     case '/':
       btnDivide.classList.add('btnOperatorActive');
+      operatorActive = true;
       break;
     default:
       break;
   }
 }
 // --------------------------------------------
-function setBtnOperatorInactive() {
+function setOperatorInactive() {
   btnAdd.classList.remove('btnOperatorActive');
   btnSubtract.classList.remove('btnOperatorActive');
   btnMultiply.classList.remove('btnOperatorActive');
   btnDivide.classList.remove('btnOperatorActive');
+  operatorActive = false;
 }
 // --------------------------------------------
 function writeDisplay(value) {
@@ -170,7 +175,7 @@ function clearAll() {
   inputDisplay.textContent = '0'; //clear display
   inputArray.length = 0; // clear array
 
-  setBtnOperatorInactive()
+  setOperatorInactive()
 
   console.clear();
   console.log(inputArray);
