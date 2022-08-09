@@ -86,6 +86,12 @@ function operate(operandX, operandY, operator) {
 }
 // --------------------------------------------
 function processSolution(appendOperator) {
+
+  // plausibility check if an operation is possible
+  if (countOperandXLength() < 1 || getOperatorPos() < 0 || countOperandYLength() < 1) { // operandX NO || operator NO || operandY NO
+    return; // operation not possible; at least one element is missing to proceed 
+  }
+
   let operandX = 0;
   let operandY = 0;
   let operator = '';
