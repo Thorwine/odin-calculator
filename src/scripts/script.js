@@ -103,25 +103,32 @@ function processSolution(appendOperator) {
   if (typeof appendOperator !== 'undefined') {
     inputArray.push(appendOperator);
   }
-  console.log(inputArray);
+  console.log('inputArray after processSolution: ' + inputArray);
   setOperatorInactive();
 }
 // --------------------------------------------
 function setInput(input) {
 
+  console.clear();
+
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
 
-  // limit input for each operand
-  if (inputArray.length < 9) { // allow max 9 digits
-    inputArray.push(input);
-  } else if (checkInput(input) >= 0) { // always allow operator
-    inputArray.push(input);
-  } else if (inputArray.length > 9 && inputArray.length < 19) { // allow max 9 digits after operator
-    inputArray.push(input); // 
-  }
+  // if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) {
+  //   inputArray.push(input);
+  // } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) {
+  //   inputArray.push(input);
+  // } else if (countOperandXLength() >= 9 && getOperatorPos() > 0 && countOperandYLength() < 9) {
+  //   inputArray.push(input);
+  // }
+
+  inputArray.push(input);
 
   console.log(inputArray);
+  console.log('X-Length: ' + countOperandXLength());
+  console.log('Y-Length: ' + countOperandYLength());
+  console.log('OperatorPos: ' + getOperatorPos());
+  console.log('checkInput: ' + checkInput(input));
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
     writeDisplay(inputArray.join('')); // write numbers 
@@ -129,21 +136,29 @@ function setInput(input) {
     writeDisplay(inputArray.join('').slice(0, inputArray.length - 1)); // write only the numbers without operator
   } else { // everything after the operator
     if (operatorActive === true && checkInput(input) >= 0) { // second operator incoming!
-
-      // check if last digit is an operator. If so, change against the new chosen operator
-      if (checkInput(inputArray.slice(inputArray.length - 1, inputArray.length).toString()) >= 0) { // last digit is an operator
-        inputArray.splice(inputArray.length - 2, 2); // delete last 2 digits
-        inputArray.push(input); // add new operator
-        setOperatorInactive();
-        setOperatorActive(input);
-      } else {
-        processSolution(input); // process intermediate solution and pass over second operator
-      }
-
+      processSolution(input); // process intermediate solution and pass over second operator
     } else { // NO second operator, proceed...
       writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
       setOperatorInactive();
     }
+  }
+}
+// --------------------------------------------
+function countOperandXLength() {
+  if (getOperatorPos() < 0) { // no operator
+    return inputArray.length;
+  } else {
+    let operandX = inputArray.slice(0, getOperatorPos()); // left side of operator
+    return operandX.length;
+  }
+}
+// --------------------------------------------
+function countOperandYLength() {
+  if (getOperatorPos() >= 0) {
+    let operandY = inputArray.slice(getOperatorPos() + 1, inputArray.length); // right side of operator
+    return operandY.length;
+  } else { // no operator
+    return 0;
   }
 }
 // --------------------------------------------
