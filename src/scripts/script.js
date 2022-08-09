@@ -1,4 +1,5 @@
 // VARIABLES
+"use strict";
 let operatorActive = false;
 const inputArray = [];
 const inputDisplay = document.querySelector('.display');
@@ -121,11 +122,11 @@ function setInput(input) {
     return;
   }
 
-  // ToDo change operator if chosen
-  // if ((getOperatorPos() + 1) === inputArray.length && checkInput(input) >= 0) {
-  //   inputArray.pop();
-  //   setOperatorInactive();
-  // }
+  // change operator if chosen
+  if ((getOperatorPos() + 1) === inputArray.length && checkInput(input) >= 0) { // last element is operator && input is operator
+    inputArray.pop(); // delete last element, new one is set regularly in code below
+    setOperatorInactive();
+  }
 
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
