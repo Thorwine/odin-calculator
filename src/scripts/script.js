@@ -109,21 +109,26 @@ function processSolution(appendOperator) {
 // --------------------------------------------
 function setInput(input) {
 
-  // console.clear();
+  // do not accept an operator as first input
+  if (countOperandXLength() < 1 && checkInput(input) >= 0 && countOperandYLength() < 1) { // X < 1. operator YES
+    return;
+  }
+
+  // do not accept same operator again, but exchange different operators
+  if (inputArray.join('').slice(inputArray.length - 1, inputArray.length) === input) { // same operator
+    return;
+  }
 
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
 
   // limit input on 9 digits for each operand
-  if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) { // X < 9, Operator NO, no Y
+  if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) { // operandX < 9; operator NO; no operandY
     inputArray.push(input);
-    // console.log('Stage 1');
-  } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) { // X >= 9, Operator YES, no Y
+  } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) { // operandX >= 9; operator YES; no operandY
     inputArray.push(input);
-    // console.log('Stage 2');
-  } else if (getOperatorPos() > 0 && countOperandYLength() < 9) { // Operator YES, Y < 9
+  } else if (getOperatorPos() > 0 && countOperandYLength() < 9) { // operator YES; operandY < 9
     inputArray.push(input);
-    // console.log('Stage 3');
   }
 
   console.log(inputArray);
