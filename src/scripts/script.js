@@ -109,26 +109,28 @@ function processSolution(appendOperator) {
 // --------------------------------------------
 function setInput(input) {
 
-  console.clear();
+  // console.clear();
 
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
 
-  // if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) {
-  //   inputArray.push(input);
-  // } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) {
-  //   inputArray.push(input);
-  // } else if (countOperandXLength() >= 9 && getOperatorPos() > 0 && countOperandYLength() < 9) {
-  //   inputArray.push(input);
-  // }
-
-  inputArray.push(input);
+  // limit input on 9 digits for each operand
+  if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) { // X < 9, Operator NO, no Y
+    inputArray.push(input);
+    // console.log('Stage 1');
+  } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) { // X >= 9, Operator YES, no Y
+    inputArray.push(input);
+    // console.log('Stage 2');
+  } else if (getOperatorPos() > 0 && countOperandYLength() < 9) { // Operator YES, Y < 9
+    inputArray.push(input);
+    // console.log('Stage 3');
+  }
 
   console.log(inputArray);
-  console.log('X-Length: ' + countOperandXLength());
-  console.log('Y-Length: ' + countOperandYLength());
-  console.log('OperatorPos: ' + getOperatorPos());
-  console.log('checkInput: ' + checkInput(input));
+  // console.log('X-Length: ' + countOperandXLength());
+  // console.log('Y-Length: ' + countOperandYLength());
+  // console.log('OperatorPos: ' + getOperatorPos());
+  // console.log('checkInput: ' + checkInput(input));
 
   if (getOperatorPos() < 0) { // no operator in array (-1)
     writeDisplay(inputArray.join('')); // write numbers 
@@ -137,6 +139,7 @@ function setInput(input) {
   } else { // everything after the operator
     if (operatorActive === true && checkInput(input) >= 0) { // second operator incoming!
       processSolution(input); // process intermediate solution and pass over second operator
+      setOperatorActive(input);
     } else { // NO second operator, proceed...
       writeDisplay(inputArray.join('').slice((getOperatorPos() + 1), inputArray.length)); // write numbers after operator
       setOperatorInactive();
