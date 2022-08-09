@@ -103,31 +103,39 @@ function processSolution(appendOperator) {
   if (typeof appendOperator !== 'undefined') {
     inputArray.push(appendOperator);
   }
-  console.log('inputArray after processSolution: ' + inputArray);
+  console.log('inputArray after processSolution: ');
+  console.log(inputArray);
+
   setOperatorInactive();
 }
 // --------------------------------------------
 function setInput(input) {
 
   // do not accept an operator as first input
-  if (countOperandXLength() < 1 && checkInput(input) >= 0 && countOperandYLength() < 1) { // X < 1. operator YES
+  if (countOperandXLength() < 1 && checkInput(input) >= 0 && countOperandYLength() < 1) { // no operandX && operator YES && no operandY
     return;
   }
 
-  // do not accept same operator again, but exchange different operators
+  // do not accept same operator again
   if (inputArray.join('').slice(inputArray.length - 1, inputArray.length) === input) { // same operator
     return;
   }
+
+  // ToDo change operator if chosen
+  // if ((getOperatorPos() + 1) === inputArray.length && checkInput(input) >= 0) {
+  //   inputArray.pop();
+  //   setOperatorInactive();
+  // }
 
   // if input is an operator, set classList & boolean
   setOperatorActive(input);
 
   // limit input on 9 digits for each operand
-  if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) { // operandX < 9; operator NO; no operandY
+  if (countOperandXLength() < 9 && getOperatorPos() < 0 && countOperandYLength() < 1) { // operandX < 9 && operator NO && no operandY
     inputArray.push(input);
-  } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) { // operandX >= 9; operator YES; no operandY
+  } else if (countOperandXLength() >= 9 && checkInput(input) >= 0 && countOperandYLength() < 1) { // operandX >= 9 && operator YES && no operandY
     inputArray.push(input);
-  } else if (getOperatorPos() > 0 && countOperandYLength() < 9) { // operator YES; operandY < 9
+  } else if (getOperatorPos() > 0 && countOperandYLength() < 9) { // operator YES && operandY < 9
     inputArray.push(input);
   }
 
