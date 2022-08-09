@@ -124,7 +124,7 @@ function setInput(input) {
   }
 
   // do not accept same operator again
-  if (inputArray.join('').slice(inputArray.length - 1, inputArray.length) === input) { // same operator
+  if ((checkInput(input) >= 0) && inputArray.join('').slice(inputArray.length - 1, inputArray.length) === input) { // same operator
     return;
   }
 
